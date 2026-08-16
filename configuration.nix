@@ -2,7 +2,7 @@
 
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [
       ./hardware-configuration.nix
       inputs.noctalia-greeter.nixosModules.default
     ];
@@ -12,6 +12,19 @@
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+
+  # Cleanup
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 14d";
+  };
+
+  # also cap how many generations get kept, independent of gc timing
+  boot.loader.systemd-boot.configurationLimit = 10;
+
+  # dedupe store paths automatically after each build
+  nix.settings.auto-optimise-store = true;
 
   # Use latest kernel.
   boot.kernelPackages = pkgs.linuxPackages_latest;
@@ -31,6 +44,12 @@
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
+
+  # Logitech Mouse
+  hardware.logitech.wireless = {
+    enable = true;
+    enableGraphical = true;  # gives you the udev rules + polkit rules for solaar
+  };
 
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "de_DE.UTF-8";
@@ -117,12 +136,6 @@
     package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
 
-  # Sway
-  programs.sway = {
-  	enable = true;
-	wrapperFeatures.gtk = true;
-  };
-
   security.polkit.enable = true;
   services.gnome.gnome-keyring.enable = true;
 
@@ -153,6 +166,12 @@
     };
   };
 
+  # Noctalia Cachix
+  nix.settings = {
+    extra-substituters = [ "https://noctalia.cachix.org" ];
+    extra-trusted-public-keys = [ "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4=" ];
+  };
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
@@ -160,7 +179,6 @@
     wget
     git
     wl-clipboard
-    home-manager
     gnumake
   ];
 
