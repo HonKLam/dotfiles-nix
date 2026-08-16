@@ -17,7 +17,7 @@
     package = pkgs.kdePackages.breeze;
     name = "breeze_cursors";
     size = 24;
-  };
+ };
 
   home = {
     packages = with pkgs; [
@@ -80,5 +80,9 @@
       shell = "fish";
     };
     extraConfig = builtins.readFile ./kitty/kitty.conf;
+  };
+
+  programs.vesktop = {
+    enable = true;
   };
 }

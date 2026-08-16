@@ -45,12 +45,6 @@
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
 
-  # Logitech Mouse
-  hardware.logitech.wireless = {
-    enable = true;
-    enableGraphical = true;  # gives you the udev rules + polkit rules for solaar
-  };
-
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "de_DE.UTF-8";
     LC_IDENTIFICATION = "de_DE.UTF-8";
