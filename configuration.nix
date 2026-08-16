@@ -155,12 +155,12 @@
         path = "${pkgs.bibata-cursors}/share/icons";
       };
       keyboard = {
-        layout = "us";
+        layout = "de";
       };
     };
   };
 
-  # Noctalia Cachix
+  # Noctalia Caching (since building takes a while)
   nix.settings = {
     extra-substituters = [ "https://noctalia.cachix.org" ];
     extra-trusted-public-keys = [ "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4=" ];
@@ -169,7 +169,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    neovim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    neovim
     wget
     git
     wl-clipboard
