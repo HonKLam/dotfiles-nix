@@ -61,28 +61,4 @@
     };
   };
 
-  programs.fish = {
-    enable = true;
-    interactiveShellInit = ''
-      set fish_greeting "Welcome back, Lamo!"
-    '';
-    shellAliases = {
-      nrs = "sudo nixos-rebuild switch";
-      ngc = "sudo nix-collect-garbage -d && nix store optimise";
-      nrt = "sudo nixos-rebuild test";
-    };
-  };
-
-  programs.kitty = {
-    enable = true;
-    shellIntegration.enableFishIntegration = true;
-    settings = {
-      shell = "fish";
-    };
-    extraConfig = builtins.readFile ./kitty/kitty.conf;
-  };
-
-  programs.vesktop = {
-    enable = true;
-  };
 }
