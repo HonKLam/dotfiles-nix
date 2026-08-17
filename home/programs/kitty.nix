@@ -1,7 +1,7 @@
-{ ... }:
+{ lib, ... }:
 {
   programs.kitty = {
-    enable = true;
+    enable = lib.mkDefault true;
     shellIntegration.enableFishIntegration = true;
     settings = {
       shell = "fish";

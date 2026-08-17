@@ -1,7 +1,7 @@
-{ ... }:
+{ lib, ... }:
 {
   programs.fish = {
-    enable = true;
+    enable = lib.mkDefault true;
     interactiveShellInit = ''
       set fish_greeting "Welcome back, Lamo!"
     '';
