@@ -350,6 +350,10 @@ window-rule {
   clip-to-geometry true
 }
 
+window-rule {
+  open-maximized true
+}
+
 // Floating Noctalia settings window.
 window-rule {
   match app-id="dev.noctalia.Noctalia"
@@ -426,9 +430,11 @@ binds {
 
     // Core Noctalia binds
     Mod+D { spawn-sh "noctalia msg panel-toggle launcher"; }
+    Mod+Period { spawn-sh "noctalia msg panel-toggle wallpaper"; }
     Mod+S { spawn-sh "noctalia msg panel-toggle control-center"; }
     Mod+Comma { spawn-sh "noctalia msg settings-toggle"; }
     Alt+Tab { spawn-sh "noctalia msg window-switcher"; }
+
     // Niri has a built-in window switcher you might want to try it to see which one you prefer.
 
     // Audio & Brightness
@@ -569,8 +575,8 @@ binds {
     // The following binds move the focused window in and out of a column.
     // If the window is alone, they will consume it into the nearby column to the side.
     // If the window is already in a column, they will expel it out.
-    Mod+BracketLeft  { consume-or-expel-window-left; }
-    Mod+BracketRight { consume-or-expel-window-right; }
+    Mod+Mod5+0      { consume-or-expel-window-left; }
+    Mod+Mod5+ssharp { consume-or-expel-window-right; }
 
     // Consume one window from the right to the bottom of the focused column.
     // Mod+Comma  { consume-window-into-column; }
@@ -620,6 +626,7 @@ binds {
 
     // Move the focused window between the floating and the tiling layout.
     Mod+V       { toggle-window-floating; }
+
     Mod+Shift+V { switch-focus-between-floating-and-tiling; }
 
     // Toggle tabbed column display mode.

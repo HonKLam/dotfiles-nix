@@ -3,7 +3,8 @@
   programs.fish = {
     enable = lib.mkDefault true;
     interactiveShellInit = ''
-      set fish_greeting "Welcome back, Lamo!"
+      set fish_greeting ""
+      fastfetch
     '';
     shellAliases = {
       nrs = "sudo nixos-rebuild switch";
