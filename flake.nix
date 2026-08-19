@@ -27,7 +27,7 @@
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
           home-manager.extraSpecialArgs = { inherit inputs; };
-          home-manager.users.lamo = import ./home/home.nix;
+          home-manager.users.lamo = import ./home;
           home-manager.sharedModules = [
 	    inputs.noctalia.homeModules.default
 	  ];

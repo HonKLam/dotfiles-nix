@@ -12,6 +12,9 @@
       enable = true;
       systemd.enable = false;
     };
+
+    wayland.windowManager.hyprland.settings.env = [ "QT_QPA_PLATFORMTHEME,qt6ct" ];
+
     xdg.configFile."hypr/hyprland.lua".source = ./../hypr/hyprland.lua;
   };
 }

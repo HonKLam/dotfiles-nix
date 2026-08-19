@@ -1,14 +1,25 @@
-{ lib, ... }:
+{ config, lib, ... }:
 {
   programs.noctalia = {
     enable = lib.mkDefault true;
+
     settings = {
       theme = {
         mode = "dark";
 	source = "wallpaper";
-	builtin = "Catppuccin";
 	wallpaper_scheme = "m3-content";
+
+        templates = {
+          enable_builtin_templates = true;
+	  builtin_ids = ["qt" "kcolorscheme" "gtk3" "gtk4" ];
+
+	  user.kdeglobals = {
+	    input_path  = "${config.xdg.configHome}/noctalia/templates/kdeglobals.in";
+	    output_path = "${config.xdg.configHome}/kdeglobals";
+	  };
+        };
       };
+
 
       wallpaper = {
         enabled = true;

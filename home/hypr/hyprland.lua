@@ -9,7 +9,6 @@
 -- Create your files separately and then require them like this:
 -- require("myColors")
 
-
 ------------------
 ---- MONITORS ----
 ------------------
@@ -72,6 +71,8 @@ end)
 -------------------------------
 
 -- See https://wiki.hypr.land/Configuring/Advanced-and-Cool/Environment-variables/
+
+hl.env("QT_QPA_PLATFORMTHEME", "qt6ct")
 
 hl.env("XDG_CURRENT_DESKTOP", "Hyprland")
 hl.env("XDG_SESSION_TYPE", "wayland")
@@ -255,7 +256,7 @@ hl.config({
         kb_layout  = "de",
         kb_variant = "",
         kb_model   = "",
-        kb_options = "caps:escape",
+        kb_options = "",
         kb_rules   = "",
 
         follow_mouse = 1,
@@ -279,12 +280,12 @@ hl.gesture({
 ---------------------
 
 local mainMod = "SUPER" -- Sets "Windows" key as main modifier
+local hyperMod = "SUPER + CTRL + ALT + SHIFT"
 
 -- Example binds, see https://wiki.hypr.land/Configuring/Basics/Binds/ for more
 hl.bind(mainMod .. " + Return", hl.dsp.exec_cmd(terminal))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + D", hl.dsp.exec_cmd(menu))
-hl.bind(mainMod .. " + B", hl.dsp.exec_cmd(browser))
 
 local closeWindowBind = hl.bind(mainMod .. " + SHIFT + Q", hl.dsp.window.close())
 -- closeWindowBind:set_enabled(false)
@@ -318,6 +319,35 @@ for i = 1, 10 do
     hl.bind(mainMod .. " + " .. key,             hl.dsp.focus({ workspace = i}))
     hl.bind(mainMod .. " + SHIFT + " .. key,     hl.dsp.window.move({ workspace = i }))
 end
+
+
+-- The set of workspaces allowed to be moved between monitors
+-- hyprMod + 1 / hyperMod + 2 move the *current* workspace to correct Monitors,
+-- but only if it's one of the movable ones
+local MOVABLE = { B = true, T = true }
+local function move_if_movable(monitor)
+  return function()
+    local ws = hl.get_active_workspace()
+    if ws and MOVABLE[ws.name] then
+      local wsname = "name:" .. ws.name
+      hl.dispatch(hl.dsp.workspace.move({ workspace = wsname, monitor = monitor }))
+      hl.dispatch(hl.dsp.focus({ workspace = "previous" })) -- workaround for noctalia
+      hl.dispatch(hl.dsp.focus({ workspace = wsname })) -- to refresh active workspace 
+    end
+  end
+end
+
+-- Move WORKSPACE to Monitor 1 or 2
+hl.bind(hyperMod .. " + 1", move_if_movable("desc:AOC 27G1G4 0x00036DF0")); -- this might bite me eventually when i switch monitors bruh
+hl.bind(hyperMod .. " + 2", move_if_movable("desc:BNQ BenQ GW2780 ETDCL03005SL0")); -- hello if you read this :)
+
+-- Terminal Workspace
+hl.bind(mainMod .. " + T", hl.dsp.focus({ workspace = "name:T" }));
+hl.bind(mainMod .. " + SHIFT + T", hl.dsp.window.move({ workspace = "name:T" }));
+
+-- Browser Workspace
+hl.bind(mainMod .. " + B", hl.dsp.focus({ workspace = "name:B" }));
+hl.bind(mainMod .. " + SHIFT + B", hl.dsp.window.move({ workspace = "name:B" }));
 
 -- Workspace prev/next (restored, was missing)
 hl.bind(mainMod .. " + less",         hl.dsp.window.move({ workspace = "-1" }))
@@ -426,6 +456,23 @@ hl.window_rule({
     move  = "20 monitor_h-120",
     float = true,
 })
+
+-- Browser Workspace Rule
+hl.window_rule({
+    name  = "move-browser-to-special-workspace",
+    match = { class = "librewolf" },
+    workspace = "name:B",
+})
+
+-- Terminal Workspace Rule
+hl.window_rule({
+    name  = "move-terminal-to-special-workspace",
+    match = { class = "kitty" },
+    workspace = "name:T",
+})
+
+-- Noctalia theme
+require("noctalia").apply_theme()
 
 -- Noctalia Blur
 hl.layer_rule({

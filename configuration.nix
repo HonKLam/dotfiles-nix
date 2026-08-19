@@ -12,6 +12,23 @@
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  
+  # This is for my Keyboard bruh (https://wiki.archlinux.org/title/Apple_Keyboard)
+  boot.extraModprobeConfig = ''
+    options hid_apple fnmode=2
+  '';
+
+  # This is also for my keyboard bruh
+  services.keyd = {
+    enable = true;
+    keyboards.default = {
+      ids = [ "*" ];
+      settings = {
+        main.capslock = "overload(hyper, esc)";
+        "hyper:C-M-A-S" = {};
+      };
+    };
+  };
 
   # Cleanup
   nix.gc = {
@@ -90,6 +107,11 @@
     liberation_ttf
     nerd-fonts.jetbrains-mono
   ];
+
+  # Media Key Control
+  services.playerctld = {
+    enable = true;
+  };
 
   # Enable OpenGL
   hardware.graphics = {
