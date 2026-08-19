@@ -162,6 +162,9 @@
     xwayland.enable = true; # Xwayland can be disabled.
   };
 
+  # Niri
+  programs.niri.enable = true;
+
   # Noctalia Greeter
   programs.noctalia-greeter = {
     enable = true;
@@ -171,14 +174,18 @@
     # Full declarative greeter.toml (overwritten on each activation).
     # See examples/greeter.toml for every key (appearance.palette, output, …).
     settings = {
+
       cursor = {
         theme = "Bibata-Modern-Ice";
         size = 24;
         path = "${pkgs.bibata-cursors}/share/icons";
       };
+
       keyboard = {
         layout = "de";
       };
+
+      shell.greeter_sync.privilege_command = "kitty -e pkexec";
     };
   };
 

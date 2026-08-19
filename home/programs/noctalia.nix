@@ -12,11 +12,6 @@
         templates = {
           enable_builtin_templates = true;
 	  builtin_ids = ["qt" "kcolorscheme" "gtk3" "gtk4" ];
-
-	  user.kdeglobals = {
-	    input_path  = "${config.xdg.configHome}/noctalia/templates/kdeglobals.in";
-	    output_path = "${config.xdg.configHome}/kdeglobals";
-	  };
         };
       };
 
