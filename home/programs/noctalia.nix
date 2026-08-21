@@ -2,24 +2,21 @@
 {
   programs.noctalia = {
     enable = lib.mkDefault true;
-
     settings = {
       theme = {
         mode = "dark";
-	source = "wallpaper";
-	wallpaper_scheme = "m3-content";
-
+        source = "wallpaper";
+        wallpaper_scheme = "m3-content";
         templates = {
           enable_builtin_templates = true;
-	  builtin_ids = ["qt" "kcolorscheme" "gtk3" "gtk4" ];
+          builtin_ids = [ "qt" "kcolorscheme" "gtk3" "gtk4" ];
         };
       };
 
-
       wallpaper = {
         enabled = true;
-	transition = [ "honeycomb" ];
-	transition_on_startup = true;
+        transition = [ "honeycomb" ];
+        transition_on_startup = true;
       };
 
       shell = {
