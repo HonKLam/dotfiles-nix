@@ -83,12 +83,17 @@
   # Configure console keymap
   console.keyMap = "de";
 
+  # Activate Fish as Login-Shell
+  programs.fish.enable = true;
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users."lamo" = {
+    initialPassword = "test";
     isNormalUser = true;
     description = "lamo";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [];
+    shell = pkgs.fish;
   };
 
   # Allow unfree packages
@@ -195,6 +200,13 @@
     extra-trusted-public-keys = [ "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4=" ];
   };
 
+  # Virtualisation
+  virtualisation.vmVariant = {
+    virtualisation = {
+     graphics = false;
+    };
+  };
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
@@ -230,6 +242,6 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "26.05"; # Did you read the comment?
+  stdenv.hostPlatform.system.stateVersion = "26.05"; # Did you read the comment?
 
 }
