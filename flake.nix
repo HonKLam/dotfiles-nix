@@ -14,6 +14,11 @@
     noctalia = {
       url = "github:noctalia-dev/noctalia";
     };
+
+    bonfire = {
+      url = "git+ssh://git@github.com/honklam/bonfire.git";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs@{ nixpkgs, home-manager, ... }: {
@@ -30,6 +35,7 @@
           home-manager.users.lamo = import ./home;
           home-manager.sharedModules = [
 	    inputs.noctalia.homeModules.default
+	    inputs.bonfire.homeManagerModules.default
 	  ];
         }
       ];

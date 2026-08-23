@@ -1,5 +1,25 @@
 {
   "nodes": {
+    "bonfire": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1787487704,
+        "narHash": "sha256-YZSY0i9jFDuXEw7mpu7b6ocKyPWgQCoMrT8p5wr7lgA=",
+        "ref": "refs/heads/main",
+        "rev": "307b54f951c64f8776c730e2cb23f0934a2858a1",
+        "revCount": 1,
+        "type": "git",
+        "url": "ssh://git@github.com/honklam/bonfire.git"
+      },
+      "original": {
+        "type": "git",
+        "url": "ssh://git@github.com/honklam/bonfire.git"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -88,6 +108,7 @@
     },
     "root": {
       "inputs": {
+        "bonfire": "bonfire",
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
         "noctalia": "noctalia",
